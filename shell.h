@@ -18,4 +18,3 @@ char *parse_input(char *input);
 void execute_command(char *command);
 
 #endif
-
