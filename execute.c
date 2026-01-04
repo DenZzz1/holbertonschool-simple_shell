@@ -33,7 +33,7 @@ void execute_command(char *input)
 	argc = parse_arguments(input, argv);
 	if (argc == 0)
 		return;
-builtin_result = execute_builtin(argv);
+        builtin_result = execute_builtin(argv);
 	if (builtin_result == 1)
 		exit(0);
 	else if (builtin_result == 0)
@@ -41,7 +41,7 @@ builtin_result = execute_builtin(argv);
 	command_path = find_command(argv[0]);
 	if (command_path == NULL)
 	{
-		fprintf(stderr, "./shell: 1: %s: not found\n", argv[0]);
+		fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
 		return;
 	}
 	pid = fork();
