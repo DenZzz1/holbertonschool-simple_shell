@@ -15,6 +15,7 @@ extern char **environ;
 void print_prompt(void);
 ssize_t read_input(char *buffer, size_t size);
 char *parse_input(char *input);
-void execute_command(char *command);
+int parse_arguments(char *input, char **argv);
+void execute_command(char *input);
 
 #endif
