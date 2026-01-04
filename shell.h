@@ -18,6 +18,7 @@ ssize_t read_input(char *buffer, size_t size);
 char *parse_input(char *input);
 int parse_arguments(char *input, char **argv);
 void execute_command(char *input);
+void run_child_process(char *command_path, char **argv);
 char *find_command(char *command);
 char *get_path_env(void);
 

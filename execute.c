@@ -1,6 +1,22 @@
 #include "shell.h"
 
 /**
+ * run_child_process - Runs command in child process
+ * @command_path: Full path to the command
+ * @argv: Array of arguments
+ */
+void run_child_process(char *command_path, char **argv)
+{
+	if (execve(command_path, argv, environ) == -1)
+	{
+		perror("./shell");
+		if (command_path != argv[0])
+			free(command_path);
+		exit(EXIT_FAILURE);
+	}
+}
+
+/**
  * execute_command - Executes a command using execve
  * @input: The input string containing command and arguments
  */
@@ -16,13 +32,10 @@ void execute_command(char *input)
 		return;
 
 	argc = parse_arguments(input, argv);
-
 	if (argc == 0)
 		return;
 
-	/* Find the command in PATH or use as-is if it's a path */
 	command_path = find_command(argv[0]);
-
 	if (command_path == NULL)
 	{
 		fprintf(stderr, "./shell: 1: %s: not found\n", argv[0]);
@@ -30,7 +43,6 @@ void execute_command(char *input)
 	}
 
 	pid = fork();
-
 	if (pid == -1)
 	{
 		perror("Error");
@@ -39,19 +51,9 @@ void execute_command(char *input)
 		return;
 	}
 	else if (pid == 0)
-	{
-		/* Child process */
-		if (execve(command_path, argv, environ) == -1)
-		{
-			perror("./shell");
-			if (command_path != argv[0])
-				free(command_path);
-			exit(EXIT_FAILURE);
-		}
-	}
+		run_child_process(command_path, argv);
 	else
 	{
-		/* Parent process */
 		wait(&status);
 		if (command_path != argv[0])
 			free(command_path);
