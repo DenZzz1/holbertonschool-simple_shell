@@ -21,5 +21,7 @@ void execute_command(char *input);
 void run_child_process(char *command_path, char **argv);
 char *find_command(char *command);
 char *get_path_env(void);
+int execute_builtin(char **argv);
+int builtin_exit(char **argv);
 
 #endif
