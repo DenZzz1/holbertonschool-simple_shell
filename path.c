@@ -36,7 +36,7 @@ char *find_command(char *command)
 	/* If command contains '/', it's already a path */
 	if (strchr(command, '/') != NULL)
 	{
-		if (access(command, X_OK) == 0)
+		if (stat(command, &st) == 0)
 			return (command);
 		return (NULL);
 	}
@@ -53,7 +53,7 @@ char *find_command(char *command)
 	while (dir != NULL)
 	{
 		snprintf(full_path, sizeof(full_path), "%s/%s", dir, command);
-		if (access(full_path, X_OK) == 0)
+		if (stat(full_path, &st) == 0)
 		{
 			free(path_copy);
 			return (strdup(full_path));
